@@ -28,8 +28,8 @@ const ComputerCanvas = () => {
     <Canvas
       shadows
       camera={{
-        position: isMobile ? [6, 3, 6] : [-20, 25, 20],
-        fov: isMobile ? 40 : 45,
+        position: isMobile ? [5, 2, 5] : [-20, 25, 20],
+        fov: isMobile ? 55 : 45,
         near: 0.1,
         far: 1000,
       }}
