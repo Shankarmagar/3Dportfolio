@@ -66,7 +66,7 @@ const Experience = () => {
                 iconStyle={{ background: '#2563eb', color: '#fff' }}
                 icon={
                   <div className="flex items-center justify-center w-full h-full">
-                    <div className="w-3 h-3 bg-white rounded-full"></div>
+                    <div className="w-3 h-3 bg-[#39373b] rounded-full"></div>
                   </div>
                 }
               >
@@ -74,9 +74,9 @@ const Experience = () => {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="bg-white dark:bg-gray-800 rounded-lg p-4 sm:p-6 shadow-lg"
+                  className="bg-[#0c131f] dark:bg-gray-800 rounded-lg p-4 sm:p-6 shadow-lg"
                 >
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 text-white mb-1 sm:mb-2">
                     {experience.title}
                   </h3>
                   <h4 className="text-base sm:text-lg font-semibold text-blue-600 dark:text-blue-400 mb-1 sm:mb-2">
