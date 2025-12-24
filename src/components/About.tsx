@@ -38,7 +38,7 @@ interface ServiceCardProps {
 
 const ServiceCard: React.FC<ServiceCardProps> = ({ index, title, icon }) => {
   return (
-    <Tilt tiltMaxAngleX={15} tiltMaxAngleY={15} className="w-full">
+    <Tilt tiltMaxAngleX={50} tiltMaxAngleY={50} className="w-full">
       <motion.div
         variants={fadeIn("right", "spring", index * 0.3, 0.75)}
         className="green-pink-gradient p-[1px] rounded-[20px] shadow-card"

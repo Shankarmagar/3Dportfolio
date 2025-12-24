@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { styles } from "../style";
 import { fadeIn, textVariant } from "../utils/motion";
 import { SectionWrapper } from "../hoc";
+import Tilt from 'react-parallax-tilt'
 
 const technologies = [
   { name: "JavaScript", icon: "⚡" },
@@ -21,6 +22,7 @@ const technologies = [
 
 const TechCard: React.FC<{ name: string; icon: string; index: number }> = ({ name, icon, index }) => {
   return (
+    <Tilt tiltMaxAngleX={50} tiltMaxAngleY={50}>
     <motion.div
       variants={fadeIn("right", "spring", index * 0.1, 0.75)}
       className="bg-gray-800/50 backdrop-blur-sm rounded-xl p-4 sm:p-6 flex flex-col items-center justify-center text-center hover:bg-gray-700/50 transition-all duration-300"
@@ -28,6 +30,7 @@ const TechCard: React.FC<{ name: string; icon: string; index: number }> = ({ nam
       <div className="text-3xl sm:text-4xl mb-3">{icon}</div>
       <h3 className="text-white text-sm sm:text-base font-semibold">{name}</h3>
     </motion.div>
+    </Tilt>
   );
 };
 
