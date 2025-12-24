@@ -1,8 +1,14 @@
 import { motion } from 'framer-motion';
 import { styles } from '../style.ts';
 import HeroCanvas from './HeroCanvas.tsx'
+import AnimatedLetters from '../AnimatedLetters.tsx';
+import AnimatedTyping from '../AnimatedTyping.tsx';
 
 const Hero = () => {
+
+  const hiArray = ['H', 'i', ',', ' ']
+  const imArray = ['I', '’', 'm', ' ']
+
   return (
     <section className='relative w-full h-screen ms-auto flex items-center justify-center'>
       <div className={`${styles.paddingX} absolute inset-0 top-[80px] sm:top-[100px] lg:top-[120px] max-w-7xl mx-auto flex flex-col lg:flex-row items-start justify-center lg:items-center gap-8 lg:gap-5`}>
@@ -24,7 +30,11 @@ const Hero = () => {
         {/* Text content */}
         <div className='flex-1 max-w-4xl text-center lg:text-left order-1 lg:order-2'>
           <h1 className={`${styles.heroHeadText} text-white mb-4 lg:mb-0`}>
-            Hi, I am <span className='text-[#915eff]'>Shankar Ale Magar</span>
+            <AnimatedLetters strArray={hiArray} idx={1} />
+          <AnimatedLetters strArray={imArray} idx={5} />
+           <span className='text-[#915eff]'>
+              <AnimatedTyping text="Shankar Ale Magar" />
+           </span>
           </h1>
           <p className={`${styles.heroSubText} mt-4 text-white-50 max-w-2xl mx-auto lg:mx-0 px-4 lg:px-0`}>
             Aspiring Software Engineer, Ex Data Analytics Intern @ LinkedIn, Ex Software Engineer @ Mangomentor
@@ -51,3 +61,4 @@ const Hero = () => {
 }
 
 export default Hero;
+
