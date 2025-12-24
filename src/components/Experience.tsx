@@ -1,6 +1,7 @@
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
 import { motion } from 'framer-motion';
+import { SectionWrapper } from '../hoc';
 
 interface Experience {
   title: string;
@@ -108,4 +109,4 @@ const Experience = () => {
   );
 };
 
-export default Experience
+export default SectionWrapper(Experience, "experience")
