@@ -64,13 +64,10 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ index, title, icon }) => {
 const About = () => {
   return (
     <>
-      {/* Heading */}
       <motion.div variants={textVariant()}>
         <p className={styles.SectionSubText}>Introduction</p>
         <h2 className={styles.SectionHeadText}>Overview</h2>
       </motion.div>
-
-      {/* Description */}
       <motion.p
         variants={fadeIn("", "", 0.1, 1)}
         className="mt-4 text-white text-[17px] max-w-3xl leading-[30px] "
@@ -85,7 +82,6 @@ const About = () => {
         datasets and create interactive dashboards.
       </motion.p>
 
-      {/* Service Cards */}
       <div className="mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
         {services.map((service, index) => (
           <ServiceCard key={service.title} index={index} {...service} />

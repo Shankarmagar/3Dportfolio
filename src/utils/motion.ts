@@ -1,14 +1,19 @@
-export const textVariant = (delay: any) => {
-    return{
+import type { Variants } from "framer-motion";
+
+// Common easing functions as cubic-bezier arrays
+const easeOutCubic = [0.25, 0.46, 0.45, 0.94] as const;
+
+export const textVariant = (delay?: number): Variants => {
+    return {
         hidden: {
             y: -50,
             opacity: 0,
         },
         show: {
-            y:0,
+            y: 0,
             opacity: 1,
             transition: {
-                type: "spring",
+                type: "spring" as const,
                 duration: 1.25,
                 delay: delay,
             },
@@ -16,8 +21,13 @@ export const textVariant = (delay: any) => {
     };
 };
 
-export const fadeIn = (direction: string, type: any, delay: any, duration: any) => {
-    return{
+export const fadeIn = (
+    direction: string, 
+    type?: string, 
+    delay?: number, 
+    duration?: number
+): Variants => {
+    return {
         hidden: {
             x: direction === "left" ? 100 : direction === "right" ? -100 : 0,
             y: direction === "up" ? 100 : direction === "down" ? -100 : 0,
@@ -28,19 +38,18 @@ export const fadeIn = (direction: string, type: any, delay: any, duration: any) 
             y: 0,
             opacity: 1,
             transition: {
-                type: type,
-                delay: delay,
-                duration: duration,
-                ease: "easeOut",
-            }
-        }
-    }
-}
+                type: (type && type !== "" ? type : "spring") as any,
+                delay: delay || 0,
+                duration: duration || 1,
+                ease: easeOutCubic,
+            },
+        },
+    };
+};
 
-export const zoomIn = (delay: any, duration: any) =>
-{
- return{
-    hidden: {
+export const zoomIn = (delay?: number, duration?: number): Variants => {
+    return {
+        hidden: {
             scale: 0,
             opacity: 0,
         },
@@ -48,20 +57,24 @@ export const zoomIn = (delay: any, duration: any) =>
             scale: 1,
             opacity: 1,
             transition: {
-                type: "tween",
-                delay: delay,
-                duration: duration,
-                ease: "easeOut",
-            }
- }
-}
-}
+                type: "tween" as const,
+                delay: delay || 0,
+                duration: duration || 1,
+                ease: easeOutCubic,
+            },
+        },
+    };
+};
 
-export const slideIn = (direction: string, type: any, delay: any, duration: any) =>
-{
- return{
-    hidden: {
-            x: direction === "left" ? "-100%": direction === "right" ? "100%" : 0,
+export const slideIn = (
+    direction: string, 
+    type?: string, 
+    delay?: number, 
+    duration?: number
+): Variants => {
+    return {
+        hidden: {
+            x: direction === "left" ? "-100%" : direction === "right" ? "100%" : 0,
             y: direction === "up" ? "100%" : direction === "down" ? "100%" : 0,
         },
         show: {
@@ -69,25 +82,26 @@ export const slideIn = (direction: string, type: any, delay: any, duration: any)
             y: 0,
             opacity: 1,
             transition: {
-                type: type,
-                delay: delay,
-                duration: duration,
-                ease: "easeOut",
-            }
- }
-}
-}
-export const staggerContainer = (staggerChildren: any, delayChildren: any) => {
-    return{
+                type: (type && type !== "" ? type : "spring") as any,
+                delay: delay || 0,
+                duration: duration || 1,
+                ease: easeOutCubic,
+            },
+        },
+    };
+};
+
+export const staggerContainer = (staggerChildren?: number, delayChildren?: number): Variants => {
+    return {
         hidden: {},
         show: {
             transition: {
-                staggerChildren: staggerChildren,
+                staggerChildren: staggerChildren || 0,
                 delayChildren: delayChildren || 0,
-            }
-        }
-    }
-}
+            },
+        },
+    };
+};
 
 
 
