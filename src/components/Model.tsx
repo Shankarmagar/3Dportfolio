@@ -11,9 +11,9 @@ const Model: FC<ModelProps> = ({ isMobile }) => {
   return (
     <primitive
       object={scene}
-      scale={isMobile ? 0.7 : 2}
-      position={isMobile ? [-13, 7, 0] : [9, -3, -2]}
-      rotation={[0, 3.9, 0.5]}
+      scale={isMobile ? 0.45 : 2}
+      position={isMobile ? [1, 0, 0] : [9, -3, -2]}
+      rotation={isMobile ? [0,-0.7,0] :[0, 3.9, 0.5]}
     />
   )
 }
