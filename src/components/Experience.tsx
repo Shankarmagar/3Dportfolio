@@ -58,14 +58,15 @@ const Experience = () => {
           </p>
         </motion.div>
 
-        <div className="relative">
+        <div className="mt-20 flex flex-col">
           <VerticalTimeline>
             {experiences.map((experience, index) => (
               <VerticalTimelineElement
                 key={index}
+                contentStyle={{background: '#0c131f', color: '#321c44ff'}}
                 date={experience.period}
                 dateClassName="text-gray-600 dark:text-gray-300"
-                iconStyle={{ background: '#2563eb', color: '#fff' }}
+                iconStyle={{ background: '#a894b5ff', color: '#3e3640ff' }}
                 icon={
                   <div className="flex items-center justify-center w-full h-full">
                     <div className="w-3 h-3 bg-[#39373b] rounded-full"></div>
@@ -90,7 +91,7 @@ const Experience = () => {
                   <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 mb-3 sm:mb-4 leading-relaxed">
                     {experience.description}
                   </p>
-                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                  <div className="mt-2 flex flex-wrap gap-1.5 sm:gap-2">
                     {experience.technologies.map((tech, techIndex) => (
                       <span
                         key={techIndex}
