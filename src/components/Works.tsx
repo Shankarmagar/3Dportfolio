@@ -107,54 +107,6 @@ const ProjectCard1: React.FC<{
   );
 };
 
-
-const ProjectCard: React.FC<{ 
-  title: string; 
-  description: string; 
-  tags: string[]; 
-  image: string; 
-  link: string; 
-  index: number;
-}> = ({ title, description, tags, image, link, index }) => {
-  return (
-    <motion.div
-      variants={fadeIn("right", "spring", index * 0.2, 0.75)}
-      className="bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden hover:bg-gray-700/50 transition-all duration-300 group"
-    >
-      <div className="p-6 sm:p-8">
-        <div className="text-4xl sm:text-5xl mb-4 text-center">{image}</div>
-        <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 text-center">
-          {title}
-        </h3>
-        <p className="text-gray-300 text-sm sm:text-base mb-4 leading-relaxed text-center">
-          {description}
-        </p>
-        <div className="flex flex-wrap gap-2 justify-center mb-4">
-          {tags.map((tag, tagIndex) => (
-            <span
-              key={tagIndex}
-              className="px-3 py-1 text-xs font-medium bg-blue-600/20 text-blue-300 rounded-full border border-blue-500/30"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-        <div className="text-center">
-          <a
-            href={link}
-            className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800"
-          >
-            View Project
-            <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </motion.div>
-  );
-};
-
 const Works = () => {
   return (
     <>
