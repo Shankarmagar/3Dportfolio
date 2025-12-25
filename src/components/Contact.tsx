@@ -15,10 +15,10 @@ const Contact = () => {
   });
 
   const contactInfo = [
-    { icon: "📧", label: "Email", value: "shankar.ale@email.com", link: "mailto:shankar.ale@email.com" },
-    { icon: "📱", label: "Phone", value: "+1 (555) 123-4567", link: "tel:+15551234567" },
-    { icon: "📍", label: "Location", value: "San Francisco, CA", link: "#" },
-    { icon: "💼", label: "LinkedIn", value: "linkedin.com/in/shankar-ale", link: "https://linkedin.com/in/shankar-ale" },
+    { icon: "📧", label: "Email", value: "shankaralemagar91@gmail.com", link: "mailto:shankaralemagar91@email.com" },
+    { icon: "📱", label: "Phone", value: "+1 (347) 955 6785", link: "tel:+13479556785" },
+    { icon: "📍", label: "Location", value: "Queens, NY", link: "#" },
+    { icon: "💼", label: "LinkedIn", value: "linkedin profile", link: "https://www.linkedin.com/in/shankar-magar-725b671b7/" },
   ];
 
   const handleChange = (
@@ -52,88 +52,105 @@ const Contact = () => {
   };
 
   return (
-    <div className="py-12 sm:py-16 lg:py-20 bg-black">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div variants={textVariant()} className="text-center mb-12 sm:mb-16">
-          <p className={styles.SectionSubText}>Get in touch</p>
-          <h2 className={styles.SectionHeadText}>Contact</h2>
+  <div className="py-16 bg-[#0a0a0a]">
+    <div className="max-w-6xl mx-auto px-4">
+      <motion.div
+        variants={textVariant()}
+        className="text-center mb-16"
+      >
+        <p className={styles.SectionSubText}>Get in touch</p>
+        <h2 className={styles.SectionHeadText}>Contact</h2>
+      </motion.div>
+
+      <div className="relative grid grid-cols-1 lg:grid-cols-12 items-center">
+        
+        {/* LEFT RED CONTACT CARD */}
+        <motion.div
+          variants={fadeIn("right", "spring", 0.1, 0.75)}
+          className="lg:col-span-5 bg-blue-600/20 text-white rounded-2xl p-8 lg:p-10 shadow-xl z-10"
+        >
+          <h3 className="text-2xl font-bold mb-8">Contact Us</h3>
+
+          <div className="space-y-6">
+            {contactInfo.map((info, index) => (
+              <a
+                key={index}
+                href={info.link}
+                className="flex items-start gap-4 hover:opacity-90 transition"
+              >
+                <span className="text-xl">{info.icon}</span>
+                <div>
+                  <p className="font-semibold">{info.label}</p>
+                  <p className="text-sm opacity-90">{info.value}</p>
+                </div>
+              </a>
+            ))}
+          </div>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-          <motion.div variants={fadeIn("right", "spring", 0.1, 0.75)} className="space-y-8">
-            <h3 className="text-2xl font-bold text-white">Let's work together</h3>
-            <p className="text-gray-300">
-              I'm always interested in new opportunities and exciting projects.
-            </p>
+        {/* RIGHT WHITE FORM CARD */}
+        <motion.div
+          variants={fadeIn("left", "spring", 0.2, 0.75)}
+          className="lg:col-span-7 bg-[#0c131f] dark:bg-gray-800 rounded-2xl p-8 lg:p-12 shadow-xl
+                     lg:-ml-20 mt-10 lg:mt-0"
+        >
+          <h3 className="text-2xl font-bold text-white mb-2 lg:ml-30">
+            Get in Touch
+          </h3>
+          <p className="text-white/70 mb-8 lg:ml-30">
+            Feel free to drop us a line below!
+          </p>
 
-            <div className="space-y-6">
-              {contactInfo.map((info, index) => (
-                <motion.a
-                  key={index}
-                  href={info.link}
-                  className="flex items-center space-x-4 p-4 bg-gray-800/50 rounded-xl"
-                  whileHover={{ scale: 1.02 }}
-                >
-                  <span className="text-2xl">{info.icon}</span>
-                  <div>
-                    <p className="text-white font-semibold">{info.label}</p>
-                    <p className="text-gray-300 text-sm">{info.value}</p>
-                  </div>
-                </motion.a>
-              ))}
-            </div>
-          </motion.div>
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-6 lg:ml-30">
+            <input
+              type="text"
+              name="from_name"
+              value={formData.from_name}
+              onChange={handleChange}
+              required
+              placeholder="Your Name"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg
+                         focus:outline-none focus:ring-2 focus:ring-blue-400 bg-blue-600/20 text-blue-300"
+            />
 
-          <motion.div
-            variants={fadeIn("left", "spring", 0.2, 0.75)}
-            className="bg-gray-800/50 rounded-xl p-6"
-          >
-            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-              <input
-                type="text"
-                name="from_name"
-                value={formData.from_name}
-                onChange={handleChange}
-                required
-                placeholder="Your name"
-                className="w-full px-4 py-3 bg-gray-700 rounded-lg text-white"
-              />
+            <input
+              type="email"
+              name="from_email"
+              value={formData.from_email}
+              onChange={handleChange}
+              required
+              placeholder="Your Email"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg
+                         focus:outline-none focus:ring-2 focus:ring-blue-400 bg-blue-600/20 text-blue-300"
+            />
 
-              <input
-                type="email"
-                name="from_email"
-                value={formData.from_email}
-                onChange={handleChange}
-                required
-                placeholder="Your email"
-                className="w-full px-4 py-3 bg-gray-700 rounded-lg text-white"
-              />
+            <textarea
+              name="message"
+              rows={5}
+              value={formData.message}
+              onChange={handleChange}
+              required
+              placeholder="Your Message"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg resize-none
+                         focus:outline-none focus:ring-2 focus:ring-blue-400 bg-blue-600/20 text-blue-300"
+            />
 
-              <textarea
-                name="message"
-                rows={4}
-                value={formData.message}
-                onChange={handleChange}
-                required
-                placeholder="Your message"
-                className="w-full px-4 py-3 bg-gray-700 rounded-lg text-white resize-none"
-              />
-
-              <motion.button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-500 text-white py-3 rounded-lg"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                {loading ? "Sending..." : "Send Message"}
-              </motion.button>
-            </form>
-          </motion.div>
-        </div>
+            <motion.button
+              type="submit"
+              disabled={loading}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="bg-red-500 hover:bg-red-600 text-white px-8 py-3
+                         rounded-full font-semibold disabled:opacity-60"
+            >
+              {loading ? "Sending..." : "Send"}
+            </motion.button>
+          </form>
+        </motion.div>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default SectionWrapper(Contact, "contact");

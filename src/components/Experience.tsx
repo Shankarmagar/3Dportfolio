@@ -66,7 +66,7 @@ const Experience = () => {
                 contentStyle={{background: '#0c131f', color: '#321c44ff'}}
                 date={experience.period}
                 dateClassName="text-gray-600 dark:text-gray-300"
-                iconStyle={{ background: '#a894b5ff', color: '#3e3640ff' }}
+                iconStyle={{ background: '#3d37e680', color: '#3e36404d' }}
                 icon={
                   <div className="flex items-center justify-center w-full h-full">
                     <div className="w-3 h-3 bg-[#39373b] rounded-full"></div>
@@ -95,7 +95,7 @@ const Experience = () => {
                     {experience.technologies.map((tech, techIndex) => (
                       <span
                         key={techIndex}
-                        className="px-2 sm:px-3 py-1 text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded-full whitespace-nowrap"
+                        className="px-2 py-1 text-xs font-medium bg-blue-600/20 text-blue-300 rounded-full border border-blue-500/30"
                       >
                         {tech}
                       </span>
