@@ -100,16 +100,16 @@ const ProjectCard = ({
           />
 
           <div className="absolute inset-0 flex justify-end m-3">
-            <button
+            <div
               onClick={() => window.open(link, "_blank")}
-              className="bg-black w-10 h-10 rounded-full flex justify-center items-center cursor-pointer"
+              className="w-8 h-8 bg-white rounded-full flex justify-center items-center cursor-pointer"
             >
               <img
                 src={github}
                 alt="GitHub"
                 className="w-[90%] h-[90%] object-contain"
               />
-            </button>
+            </div>
           </div>
         </div>
 
