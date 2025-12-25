@@ -38,21 +38,21 @@ interface ServiceCardProps {
 
 const ServiceCard: React.FC<ServiceCardProps> = ({ index, title, icon }) => {
   return (
-    <Tilt tiltMaxAngleX={50} tiltMaxAngleY={50} className="w-full">
+    <Tilt tiltMaxAngleX={50} tiltMaxAngleY={50} className="w-40 sm:w-48 md:w-56 lg:w-60">
       <motion.div
         variants={fadeIn("right", "spring", index * 0.3, 0.75)}
         className="green-pink-gradient p-[1px] rounded-[20px] shadow-card"
       >
-        <div className="bg-[#0c131f] rounded-[20px] py-4 px-4 sm:py-5 sm:px-8 md:px-10 min-h-[200px] sm:min-h-[260px]
+        <div className="bg-[#0c131f] rounded-[20px] py-3 px-3 sm:py-4 sm:px-4 md:py-5 md:px-6 min-h-[140px] sm:min-h-[160px] md:min-h-[180px] lg:min-h-[200px]
           flex flex-col justify-center items-center text-center"
         >
           <img
             src={icon}
             alt={title}
-            className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 object-contain mb-3 sm:mb-4"
+            className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 object-contain mb-2 sm:mb-3"
           />
 
-          <h3 className="text-white text-sm sm:text-lg md:text-[20px] font-bold leading-tight">
+          <h3 className="text-white text-xs sm:text-sm md:text-base lg:text-lg font-bold leading-tight">
             {title}
           </h3>
         </div>
@@ -82,7 +82,7 @@ const About = () => {
         datasets and create interactive dashboards.
       </motion.p>
 
-      <div className="mt-16 sm:mt-20 grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10">
+      <div className="ml-16 mt-16 sm:mt-20 grid grid-cols-2 xs:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-1 lg:gap-10">
         {services.map((service, index) => (
           <ServiceCard key={service.title} index={index} {...service} />
         ))}

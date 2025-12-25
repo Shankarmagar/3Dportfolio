@@ -85,14 +85,14 @@ const ProjectCard = ({
   return (
     <motion.div
       variants={fadeIn("up", "spring", index * 0.2, 0.75)}
-      className="bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden"
+      className="flex-shrink-0 w-80 sm:w-96 md:w-[360px] lg:w-[380px] bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden"
     >
       <Tilt
         tiltMaxAngleX={25}
         tiltMaxAngleY={25}
-        className="bg-tertiary p-5 rounded-2xl sm:w-[360px]"
+        className="bg-tertiary p-5 rounded-2xl h-full"
       >
-        <div className="relative w-full h-[230px]">
+        <div className="relative w-full h-[200px] sm:h-[230px]">
           <img
             src={image}
             alt={title}
@@ -113,18 +113,18 @@ const ProjectCard = ({
           </div>
         </div>
 
-        <div className="mt-5">
-          <h3 className="text-white font-bold text-[22px]">{title}</h3>
+        <div className="mt-5 flex-1 flex flex-col">
+          <h3 className="text-white font-bold text-[20px] sm:text-[22px] mb-2 line-clamp-2">{title}</h3>
 
-          <p className="mt-2 text-gray-300 text-[14px] leading-relaxed">
+          <p className="text-gray-300 text-[13px] sm:text-[14px] leading-relaxed mb-4 line-clamp-3 flex-1">
             {description}
           </p>
 
-          <div className="mt-4 flex flex-wrap gap-2">
+          <div className="mt-auto flex flex-wrap gap-2">
             {tags.map((tag, i) => (
               <span
                 key={i}
-                className="px-3 py-1 text-xs font-medium bg-blue-600/20 text-blue-300 rounded-full border border-blue-500/30"
+                className="px-2 py-1 text-xs font-medium bg-blue-600/20 text-blue-300 rounded-full border border-blue-500/30"
               >
                 {tag}
               </span>
