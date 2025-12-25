@@ -7,27 +7,27 @@ import { useState, useEffect } from "react";
 
 const testimonials = [
   {
-    name: "Sarah Johnson",
-    role: "Senior Developer at Tech Corp",
-    content: "Shankar demonstrated exceptional problem-solving skills and consistently delivered high-quality code. His ability to learn new technologies quickly made him a valuable team member.",
+    name: "Bin Li",
+    role: "Data and Business Intelligence at Linkedin Corp",
+    content: "Shankar joined my team as a Year-Up Intern and quickly made a strong impact. He developed key skills in SQL, Tableau, GitHub, and SFDC, and contributed to analytics projects that supported data foundations, dashboards, and revenue insights. Proactive and research-driven, Shankar consistently embraced new challenges and added value during his time at LinkedIn.",
     rating: 5
   },
   {
-    name: "Michael Chen",
-    role: "Project Manager at Innovation Labs",
-    content: "Working with Shankar was a pleasure. He has strong communication skills and always delivered projects on time with attention to detail.",
+    name: "Elaine King",
+    role: "Senior Analytics Associates at Linkedin",
+    content: "Shankar is a skilled, detail-oriented analyst I worked with at LinkedIn. He took initiative on a complex cross-functional data problem, delivered valuable product insights, and communicated clearly to ensure data accuracy. He was a pleasure to work with, and I’m excited to see what he does next.",
     rating: 5
   },
   {
-    name: "Emily Rodriguez",
-    role: "Lead Designer at Creative Studio",
-    content: "Shankar's technical expertise combined with his design sensibility resulted in user-friendly applications that exceeded our expectations.",
+    name: "Greg Elliot",
+    role: "Analytics at Linkedin",
+    content: "Shankar has been a strong addition to our analytics team, consistently demonstrating a great work ethic and proactive mindset. He delivered high-impact analytics projects that added real business value, and I’m confident he’ll continue to excel in future roles.",
     rating: 5
   },
   {
-    name: "David Kim",
-    role: "CTO at StartupXYZ",
-    content: "As an intern, Shankar showed remarkable growth and quickly became a key contributor to our development team. Highly recommended!",
+    name: "Brian Lee",
+    role: "Strategy and Operations at Linkedin",
+    content: "I worked closely with Shankar during his internship at LinkedIn and was impressed by his strong work ethic, proactive attitude, and technical skills. He demonstrated advanced SQL expertise by independently solving a complex Salesforce data hierarchy problem. I highly recommend Shankar as a capable, driven professional who would be a valuable asset to any team.",
     rating: 5
   }
 ];
@@ -208,7 +208,7 @@ const Feedback = () => {
           {/* Navigation Arrows */}
           <motion.button
             onClick={prevSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-[#0c131f] hover:bg-gray-700/80 backdrop-blur-sm rounded-full p-3 text-white shadow-lg border border-gray-600/50 hover:border-blue-500/50 transition-all duration-300 group"
+            className="absolute left-4 top-1/2 -translate-y-1/2 hover:bg-gray-700/80 backdrop-blur-sm rounded-full p-3 text-white shadow-lg border border-gray-600/50 hover:border-blue-500/50 transition-all duration-300 group"
             whileHover={{ scale: 1.1, x: -5 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -258,7 +258,7 @@ const Feedback = () => {
         </motion.div>
 
         {/* Auto-play indicator */}
-        <motion.div 
+        {/* <motion.div 
           className="flex justify-center mt-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -274,7 +274,7 @@ const Feedback = () => {
           >
             {isAutoPlaying ? 'Pause Auto-play' : 'Start Auto-play'}
           </button>
-        </motion.div>
+        </motion.div> */}
       </div>
     </div>
   );

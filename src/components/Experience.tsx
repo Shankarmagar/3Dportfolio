@@ -2,6 +2,9 @@ import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeli
 import 'react-vertical-timeline-component/style.min.css';
 import { motion } from 'framer-motion';
 import { SectionWrapper } from '../hoc';
+import { styles } from '../style';
+import { textVariant } from '../utils/motion'
+
 
 interface Experience {
   title: string;

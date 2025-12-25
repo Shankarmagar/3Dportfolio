@@ -7,6 +7,7 @@ import Hero from './components/Hero';
 import Navbar from './components/Navbar';
 import Tech from './components/Tech';
 import Works from './components/Works';
+import Certificates from './components/Certificates';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
         <Experience />
         <Tech />
         <Works />
+        <Certificates />
         <Feedback />
         <div className='relative z-0'>
           <Contact />
