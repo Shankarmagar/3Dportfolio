@@ -63,7 +63,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ index, title, icon }) => {
 
 const About = () => {
   return (
-    <>
+    <div>
       <motion.div variants={textVariant()}>
         <p className={styles.SectionSubText}>Introduction</p>
         <h2 className={styles.SectionHeadText}>Overview</h2>
@@ -87,7 +87,7 @@ const About = () => {
           <ServiceCard key={service.title} index={index} {...service} />
         ))}
       </div>
-    </>
+    </div>
   )
 }
 

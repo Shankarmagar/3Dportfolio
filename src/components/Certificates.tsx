@@ -16,7 +16,7 @@ const dummyCertifications = [
     credential_id: "2448-GYM9-SHRS",
     credential_url: "https://www.freecodecamp.org/certification/fcc70c05c73-294e-4665-a62f-fe1aec3b3144/responsive-web-design",
     description:
-      "Completed 300+ hours of coursework in responsive design, JavaScript, and CSS.",
+      "6 months intensive software development course following with 6 months internship",
   },
   {
     id: 2,
@@ -27,7 +27,7 @@ const dummyCertifications = [
     credential_id: "",
     credential_url: "https://www.freecodecamp.org/certification/fcc70c05c73-294e-4665-a62f-fe1aec3b3144/responsive-web-design",
     description:
-      "Completed 300+ hours of coursework in responsive design, JavaScript, and CSS.",
+      "Completed 10 weeks of intensive machine learning foundation course at Cornell Tech University",
   },
   {
     id: 3,
@@ -63,12 +63,12 @@ const dummyCertifications = [
       "Hands-on projects focused on user research, wireframing, prototyping, and usability testing.",
   },
 ];
-  // Dummy loading simulation — set false to always show data
+
   const isLoading = false;
 
   const certifications = dummyCertifications;
   return (
-    <div className="m-2 bg-black dark:bg-gray-900">
+    <div className="m-12 bg-black dark:bg-gray-900">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div variants={textVariant()} className="text-center mb-12 sm:mb-16">
           <div className="flex items-center justify-center gap-3 mb-6">

@@ -164,7 +164,7 @@ const Feedback = () => {
   };
 
   return (
-    <div className="py-16 sm:py-20 lg:py-24 bg-gray-900 relative overflow-hidden">
+    <div className="py-16 sm:py-20 lg:py-24 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 via-transparent to-purple-900/10" />
       

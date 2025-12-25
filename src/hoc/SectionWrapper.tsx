@@ -1,5 +1,4 @@
 import { motion } from "framer-motion"
-import { styles } from "../style"
 import { staggerContainer } from "../utils/motion"
 
 const SectionWrapper = (Component: React.FC, idName: string) =>
@@ -7,7 +6,7 @@ const SectionWrapper = (Component: React.FC, idName: string) =>
     return (
       <motion.section
         id={idName}
-        className={`${styles.padding} max-w-7xl mx-auto relative z-0`}
+        className={`flex flex-wrap justify-center max-w-7xl mx-auto relative z-0`}
         variants={staggerContainer(0.2, 0.1)}
         initial="hidden"
         whileInView="show"
