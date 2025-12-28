@@ -27,7 +27,7 @@ interface ApiExperience {
 
 const fetchExperienceData = async (): Promise<Experience[]> => {
 const response = await fetch(
-  import.meta.env.VITE_EMAILJS_TEMPLATE_ID + '/api/journey'
+  import.meta.env.VITE_RENDER_API + '/api/journey'
 );
   const result = await response.json();
   
