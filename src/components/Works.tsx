@@ -85,19 +85,23 @@ const ProjectCard = ({
           />
 
           <div className="absolute inset-0 flex justify-end m-3">
-            {link && (
-              <div
-                onClick={() => window.open(link, "_blank")}
-                className="w-8 h-8 bg-white rounded-full flex justify-center items-center cursor-pointer"
-              >
-                <img
-                  src={github}
-                  alt="GitHub"
-                  className="w-[90%] h-[90%] object-contain"
-                />
-              </div>
-            )}
-          </div>
+  {link && (
+    <div
+      onClick={() => {
+        const cleanLink = link.replace(/"/g, "");
+        window.open(cleanLink, "_blank");
+      }}
+      className="w-8 h-8 bg-white rounded-full flex justify-center items-center cursor-pointer"
+    >
+      <img
+        src={github}
+        alt="GitHub"
+        className="w-[90%] h-[90%] object-contain"
+      />
+    </div>
+  )}
+</div>
+
         </div>
 
         <div className="mt-5 justify-center flex-1 flex flex-col">
