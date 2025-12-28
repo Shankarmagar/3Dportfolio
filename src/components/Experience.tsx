@@ -26,7 +26,9 @@ interface ApiExperience {
 }
 
 const fetchExperienceData = async (): Promise<Experience[]> => {
-  const response = await fetch('https://portfolioapi-bj72.onrender.com/api/journey');
+const response = await fetch(
+  import.meta.env.VITE_EMAILJS_TEMPLATE_ID + '/api/journey'
+);
   const result = await response.json();
   
   if (!result.json.success) {
