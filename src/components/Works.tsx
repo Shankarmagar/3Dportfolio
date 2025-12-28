@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
+import { useState, useEffect } from "react";
 
 import { styles } from "../style";
 import { fadeIn, textVariant } from "../utils/motion";
@@ -7,7 +8,6 @@ import { SectionWrapper } from "../hoc";
 
 import website from "../assets/Default.jpg";
 import github from "../assets/GitHub-2.png";
-
 
 interface Project {
   title: string;
@@ -21,57 +21,38 @@ interface ProjectCardProps extends Project {
   index: number;
 }
 
+interface ApiProject {
+  id: number;
+  name: string;
+  details: string;
+  image_url: string;
+  skills: string[];
+  demo_link: string;
+  github_link: string;
+  created_at: string;
+  updated_at: string;
+  has_image: boolean;
+}
 
-const projects: Project[] = [
-  {
-    title: "E-Commerce Platform",
-    description:
-      "A full-stack e-commerce platform built with React, Node.js, and MongoDB.",
-    tags: ["React", "Node.js", "MongoDB", "Express", "Stripe"],
-    image: website,
-    link: "#",
-  },
-  {
-    title: "Task Management App",
-    description:
-      "A collaborative task management app with real-time updates and drag-and-drop.",
-    tags: ["React", "TypeScript", "Firebase", "Material-UI"],
-    image: website,
-    link: "#",
-  },
-  {
-    title: "Weather Dashboard",
-    description:
-      "A responsive weather dashboard with forecasts and interactive maps.",
-    tags: ["JavaScript", "API", "CSS3", "Chart.js"],
-    image: website,
-    link: "#",
-  },
-  {
-    title: "Portfolio Website",
-    description:
-      "A modern portfolio website with smooth animations and 3D elements.",
-    tags: ["React", "Framer Motion", "Three.js", "Tailwind CSS"],
-    image: website,
-    link: "#",
-  },
-  {
-    title: "Mobile Fitness App",
-    description:
-      "A cross-platform fitness tracking app with progress tracking.",
-    tags: ["React Native", "Redux", "SQLite"],
-    image: website,
-    link: "#",
-  },
-  {
-    title: "AI Chat Bot",
-    description:
-      "An intelligent chatbot built with NLP for customer interaction.",
-    tags: ["Python", "OpenAI", "FastAPI", "PostgreSQL"],
-    image: website,
-    link: "#",
-  },
-];
+interface ApiResponse {
+  statusCode: number;
+  json: {
+    success: boolean;
+    message: string;
+    timestamp: string;
+    data: ApiProject[];
+    pagination: {
+      page: number;
+      limit: number;
+      total: number;
+      pages: number;
+      hasNext: boolean;
+      hasPrev: boolean;
+    };
+  };
+}
+
+
 
 
 const ProjectCard = ({
@@ -94,26 +75,32 @@ const ProjectCard = ({
       >
         <div className="relative w-full h-[200px] sm:h-[230px]">
           <img
-            src={image}
+            src={image || website}
             alt={title}
             className="w-full h-full object-cover rounded-2xl"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.src = website;
+            }}
           />
 
           <div className="absolute inset-0 flex justify-end m-3">
-            <div
-              onClick={() => window.open(link, "_blank")}
-              className="w-8 h-8 bg-white rounded-full flex justify-center items-center cursor-pointer"
-            >
-              <img
-                src={github}
-                alt="GitHub"
-                className="w-[90%] h-[90%] object-contain"
-              />
-            </div>
+            {link && (
+              <div
+                onClick={() => window.open(link, "_blank")}
+                className="w-8 h-8 bg-white rounded-full flex justify-center items-center cursor-pointer"
+              >
+                <img
+                  src={github}
+                  alt="GitHub"
+                  className="w-[90%] h-[90%] object-contain"
+                />
+              </div>
+            )}
           </div>
         </div>
 
-        <div className="mt-5 flex-1 flex flex-col">
+        <div className="mt-5 justify-center flex-1 flex flex-col">
           <h3 className="text-white font-bold text-[20px] sm:text-[22px] mb-2 line-clamp-2">{title}</h3>
 
           <p className="text-gray-300 text-[13px] sm:text-[14px] leading-relaxed mb-4 line-clamp-3 flex-1">
@@ -137,6 +124,85 @@ const ProjectCard = ({
 };
 
 const Works = () => {
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        const response = await fetch('https://portfolioapi-bj72.onrender.com/api/projects/');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data: ApiResponse = await response.json();
+        
+        if (data.json.success && data.json.data && data.json.data.length > 0) {
+          // Transform API data to match Project interface
+          const transformedProjects: Project[] = data.json.data.map((apiProject: ApiProject) => ({
+            title: apiProject.name,
+            description: apiProject.details,
+            tags: apiProject.skills,
+            image: apiProject.image_url || website,
+            link: apiProject.github_link || apiProject.demo_link || '#'
+          }));
+          
+          setProjects(transformedProjects);
+        } else {
+          throw new Error('API returned empty or invalid data');
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load projects');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="w-full">
+        <motion.div
+          variants={textVariant()}
+          className="text-center mb-12 sm:mb-16"
+        >
+          <p className={styles.SectionSubText}>My Work</p>
+          <h2 className={styles.SectionHeadText}>Projects</h2>
+        </motion.div>
+        <div className="w-full flex justify-center items-center py-20">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full">
+        <motion.div
+          variants={textVariant()}
+          className="text-center mb-12 sm:mb-16"
+        >
+          <p className={styles.SectionSubText}>My Work</p>
+          <h2 className={styles.SectionHeadText}>Projects</h2>
+        </motion.div>
+        <div className="w-full flex justify-center items-center py-20">
+          <div className="text-red-400 text-center">
+            <p className="text-lg mb-2">Error loading projects</p>
+            <p className="text-sm text-gray-400">{error}</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full">
       <motion.div
@@ -162,7 +228,7 @@ const Works = () => {
         className="mt-12 flex flex-wrap justify-center gap-8"
       >
         {projects.map((project, index) => (
-          <ProjectCard key={index} {...project} index={index} />
+          <ProjectCard key={`${project.title}-${index}`} {...project} index={index} />
         ))}
       </motion.div>
     </div>
