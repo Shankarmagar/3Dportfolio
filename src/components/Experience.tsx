@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
 import { motion } from 'framer-motion';
@@ -13,34 +14,129 @@ interface Experience {
   technologies: string[];
 }
 
-const experiences: Experience[] = [
-  {
-    title: "Full Stack Developer",
-    company: "Tech Solutions Inc.",
-    period: "2023 - Present",
-    location: "Remote",
-    description: "Developing scalable web applications using React, Node.js, and cloud technologies. Led the development of a customer management system serving 10,000+ users.",
-    technologies: ["React", "Node.js", "TypeScript", "AWS", "MongoDB", "Docker"]
-  },
-  {
-    title: "Software Developer Intern",
-    company: "Innovation Labs",
-    period: "2022 - 2023",
-    location: "San Francisco, CA",
-    description: "Contributed to front-end development using React and Redux. Implemented responsive designs and improved application performance by 30%.",
-    technologies: ["React", "Redux", "JavaScript", "SCSS", "Git", "Jest"]
-  },
-  {
-    title: "Junior Web Developer",
-    company: "Digital Agency Pro",
-    period: "2021 - 2022",
-    location: "New York, NY",
-    description: "Built and maintained client websites using modern web technologies. Collaborated with design teams to create pixel-perfect implementations.",
-    technologies: ["HTML5", "CSS3", "JavaScript", "WordPress", "PHP", "MySQL"]
+interface ApiExperience {
+  id: number;
+  title: string;
+  company_name: string;
+  start_date: string;
+  end_date: string;
+  details: string;
+  location: string;
+  skills: string[];
+}
+
+const fetchExperienceData = async (): Promise<Experience[]> => {
+  const response = await fetch('https://portfolioapi-bj72.onrender.com/api/journey');
+  const result = await response.json();
+  
+  if (!result.json.success) {
+    throw new Error('Failed to fetch experience data');
   }
-];
+
+  return result.json.data.map((item: ApiExperience) => ({
+    title: item.title,
+    company: item.company_name,
+    period: formatDateRange(item.start_date, item.end_date),
+    location: item.location,
+    description: item.details,
+    technologies: item.skills || []
+  }));
+};
+
+const formatDateRange = (startDate: string, endDate: string): string => {
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'short' 
+    });
+  };
+
+  const formattedStart = formatDate(startDate);
+  
+  if (endDate.toLowerCase() === 'present' || !endDate) {
+    return `${formattedStart} - Present`;
+  }
+  
+  const formattedEnd = formatDate(endDate);
+  return `${formattedStart} - ${formattedEnd}`;
+};
 
 const Experience = () => {
+  const [experiences, setExperiences] = useState<Experience[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadExperiences = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await fetchExperienceData();
+        setExperiences(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load experiences');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadExperiences();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="py-12 sm:py-16 lg:py-20 bg-black dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
+              Experience
+            </h2>
+            <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto px-4">
+              My professional journey and key achievements
+            </p>
+          </motion.div>
+          <div className="flex justify-center items-center min-h-[400px]">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="py-12 sm:py-16 lg:py-20 bg-black dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
+              Experience
+            </h2>
+            <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto px-4">
+              My professional journey and key achievements
+            </p>
+          </motion.div>
+          <div className="flex justify-center items-center min-h-[400px]">
+            <div className="text-red-400 text-center">
+              <p className="text-lg mb-2">Error loading experiences</p>
+              <p className="text-sm text-gray-400">{error}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="py-12 sm:py-16 lg:py-20 bg-black dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
