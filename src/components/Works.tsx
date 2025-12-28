@@ -134,7 +134,9 @@ const Works = () => {
         setLoading(true);
         setError(null);
         
-        const response = await fetch('https://portfolioapi-bj72.onrender.com/api/projects/');
+        const response = await fetch(
+                                  import.meta.env.VITE_RENDER_API +'/api/projects/'
+                                );
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
