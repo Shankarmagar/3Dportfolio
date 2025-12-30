@@ -148,7 +148,7 @@ const Works = () => {
         
         const data: ApiResponse = await response.json();
         
-        if (data.json.success && data.json.data && data.json.data.length > 0) {
+        if (data.json.success && data.json.data) {
           // Transform API data to match Project interface
           const transformedProjects: Project[] = data.json.data.map((apiProject: ApiProject) => ({
             title: apiProject.name,
@@ -159,8 +159,6 @@ const Works = () => {
           }));
           
           setProjects(transformedProjects);
-        } else {
-          throw new Error('API returned empty or invalid data');
         }
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load projects');
