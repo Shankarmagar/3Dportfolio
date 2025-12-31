@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
 
 import { styles } from "../style";
-import { fadeIn, textVariant } from "../utils/motion";
+import { fadeIn } from "../utils/motion";
 import { SectionWrapper } from "../hoc";
 
 import website from "../assets/Default.jpg";
