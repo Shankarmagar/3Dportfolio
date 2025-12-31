@@ -29,26 +29,13 @@ interface ApiProject {
   skills: string[];
   demo_link: string;
   github_link: string;
-  created_at: string;
-  updated_at: string;
-  has_image: boolean;
 }
 
 interface ApiResponse {
   statusCode: number;
   json: {
     success: boolean;
-    message: string;
-    timestamp: string;
     data: ApiProject[];
-    pagination: {
-      page: number;
-      limit: number;
-      total: number;
-      pages: number;
-      hasNext: boolean;
-      hasPrev: boolean;
-    };
   };
 }
 
@@ -76,18 +63,14 @@ const ProjectCard = ({
             alt={title}
             className="w-full h-full object-cover rounded-2xl"
             onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.src = website;
+              (e.target as HTMLImageElement).src = website;
             }}
           />
 
           <div className="absolute inset-0 flex justify-end m-3">
             {link && (
               <div
-                onClick={() => {
-                  const cleanLink = link.replace(/"/g, "");
-                  window.open(cleanLink, "_blank");
-                }}
+                onClick={() => window.open(link.replace(/"/g, ""), "_blank")}
                 className="w-8 h-8 bg-white rounded-full flex justify-center items-center cursor-pointer"
               >
                 <img
@@ -137,27 +120,25 @@ const Works = () => {
         setError(null);
 
         const response = await fetch(
-          import.meta.env.VITE_RENDER_API + "/api/projects/"
+          `${import.meta.env.VITE_RENDER_API}/api/projects/`
         );
 
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error("Failed to fetch projects");
         }
 
         const data: ApiResponse = await response.json();
 
-        if (data.json.success && data.json.data) {
-          const transformedProjects: Project[] = data.json.data.map(
-            (apiProject: ApiProject) => ({
-              title: apiProject.name,
-              description: apiProject.details,
-              tags: apiProject.skills,
-              image: apiProject.image_url || website,
-              link: apiProject.github_link || apiProject.demo_link || "#",
-            })
+        if (data.json.success) {
+          setProjects(
+            data.json.data.map((item) => ({
+              title: item.name,
+              description: item.details,
+              tags: item.skills,
+              image: item.image_url || website,
+              link: item.github_link || item.demo_link || "#",
+            }))
           );
-
-          setProjects(transformedProjects);
         }
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load projects");
@@ -168,51 +149,6 @@ const Works = () => {
 
     fetchProjects();
   }, []);
-
-  if (loading) {
-    return (
-      <div className="py-12 sm:py-16 lg:py-20 bg-black dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-12 sm:mb-16"
-          >
-            <p className={styles.SectionSubText}>My Work</p>
-            <h2 className={styles.SectionHeadText}>Projects</h2>
-          </motion.div>
-          <div className="flex justify-center items-center min-h-[400px]">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="py-12 sm:py-16 lg:py-20 bg-black dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-12 sm:mb-16"
-          >
-            <p className={styles.SectionSubText}>My Work</p>
-            <h2 className={styles.SectionHeadText}>Projects</h2>
-          </motion.div>
-          <div className="flex justify-center items-center min-h-[400px]">
-            <div className="text-red-400 text-center">
-              <p className="text-lg mb-2">Error loading projects</p>
-              <p className="text-sm text-gray-400">{error}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="py-12 sm:py-16 lg:py-20 bg-black dark:bg-gray-900">
@@ -227,30 +163,36 @@ const Works = () => {
           <h2 className={styles.SectionHeadText}>Projects</h2>
         </motion.div>
 
-        <motion.p
-          variants={fadeIn("", "", 0.1, 1)}
-          className="mt-3 text-gray-300 text-[17px] max-w-3xl leading-[30px] text-center mx-auto"
-        >
-          These projects highlight my experience across analytics, full-stack
-          development, and data-driven problem solving.
-        </motion.p>
+        {loading && (
+          <div className="flex justify-center items-center min-h-[400px]">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          </div>
+        )}
 
-        <motion.div
-          variants={fadeIn("", "", 0.2, 1)}
-          className="mt-12 flex flex-wrap justify-center gap-8"
-        >
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={`${project.title}-${index}`}
-              {...project}
-              index={index}
-            />
-          ))}
-        </motion.div>
+        {error && !loading && (
+          <div className="flex justify-center items-center min-h-[400px] text-red-400">
+            {error}
+          </div>
+        )}
+
+        {!loading && !error && (
+          <motion.div
+            key={projects.length}
+            variants={fadeIn("", "", 0.2, 1)}
+            className="mt-12 flex flex-wrap justify-center gap-8"
+          >
+            {projects.map((project, index) => (
+              <ProjectCard
+                key={`${project.title}-${index}`}
+                {...project}
+                index={index}
+              />
+            ))}
+          </motion.div>
+        )}
       </div>
     </div>
   );
 };
 
 export default SectionWrapper(Works, "works");
-
