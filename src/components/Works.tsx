@@ -1,6 +1,6 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
-import { useState, useEffect } from "react";
 
 import { styles } from "../style";
 import { fadeIn, textVariant } from "../utils/motion";
@@ -52,9 +52,6 @@ interface ApiResponse {
   };
 }
 
-
-
-
 const ProjectCard = ({
   title,
   description,
@@ -66,7 +63,7 @@ const ProjectCard = ({
   return (
     <motion.div
       variants={fadeIn("up", "spring", index * 0.2, 0.75)}
-      className="flex-shrink-0 w-80 sm:w-96 md:w-[360px] lg:w-[380px] bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden"
+      className="w-80 sm:w-96 md:w-[360px] lg:w-[380px] bg-gray-800/50 backdrop-blur-sm rounded-xl overflow-hidden"
     >
       <Tilt
         tiltMaxAngleX={25}
@@ -85,27 +82,28 @@ const ProjectCard = ({
           />
 
           <div className="absolute inset-0 flex justify-end m-3">
-  {link && (
-    <div
-      onClick={() => {
-        const cleanLink = link.replace(/"/g, "");
-        window.open(cleanLink, "_blank");
-      }}
-      className="w-8 h-8 bg-white rounded-full flex justify-center items-center cursor-pointer"
-    >
-      <img
-        src={github}
-        alt="GitHub"
-        className="w-[90%] h-[90%] object-contain"
-      />
-    </div>
-  )}
-</div>
-
+            {link && (
+              <div
+                onClick={() => {
+                  const cleanLink = link.replace(/"/g, "");
+                  window.open(cleanLink, "_blank");
+                }}
+                className="w-8 h-8 bg-white rounded-full flex justify-center items-center cursor-pointer"
+              >
+                <img
+                  src={github}
+                  alt="GitHub"
+                  className="w-[90%] h-[90%] object-contain"
+                />
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="mt-5 justify-center flex-1 flex flex-col">
-          <h3 className="text-white font-bold text-[20px] sm:text-[22px] mb-2 line-clamp-2">{title}</h3>
+          <h3 className="text-white font-bold text-[20px] sm:text-[22px] mb-2 line-clamp-2">
+            {title}
+          </h3>
 
           <p className="text-gray-300 text-[13px] sm:text-[14px] leading-relaxed mb-4 line-clamp-3 flex-1">
             {description}
@@ -137,31 +135,32 @@ const Works = () => {
       try {
         setLoading(true);
         setError(null);
-        
+
         const response = await fetch(
-                                  import.meta.env.VITE_RENDER_API +'/api/projects/'
-                                );
-        
+          import.meta.env.VITE_RENDER_API + "/api/projects/"
+        );
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        
+
         const data: ApiResponse = await response.json();
-        
+
         if (data.json.success && data.json.data) {
-          // Transform API data to match Project interface
-          const transformedProjects: Project[] = data.json.data.map((apiProject: ApiProject) => ({
-            title: apiProject.name,
-            description: apiProject.details,
-            tags: apiProject.skills,
-            image: apiProject.image_url || website,
-            link: apiProject.github_link || apiProject.demo_link || '#'
-          }));
-          
+          const transformedProjects: Project[] = data.json.data.map(
+            (apiProject: ApiProject) => ({
+              title: apiProject.name,
+              description: apiProject.details,
+              tags: apiProject.skills,
+              image: apiProject.image_url || website,
+              link: apiProject.github_link || apiProject.demo_link || "#",
+            })
+          );
+
           setProjects(transformedProjects);
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load projects');
+        setError(err instanceof Error ? err.message : "Failed to load projects");
       } finally {
         setLoading(false);
       }
@@ -172,16 +171,20 @@ const Works = () => {
 
   if (loading) {
     return (
-      <div className="w-full">
-        <motion.div
-          variants={textVariant()}
-          className="text-center mb-12 sm:mb-16"
-        >
-          <p className={styles.SectionSubText}>My Work</p>
-          <h2 className={styles.SectionHeadText}>Projects</h2>
-        </motion.div>
-        <div className="w-full flex justify-center items-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="py-12 sm:py-16 lg:py-20 bg-black dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <p className={styles.SectionSubText}>My Work</p>
+            <h2 className={styles.SectionHeadText}>Projects</h2>
+          </motion.div>
+          <div className="flex justify-center items-center min-h-[400px]">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          </div>
         </div>
       </div>
     );
@@ -189,18 +192,22 @@ const Works = () => {
 
   if (error) {
     return (
-      <div className="w-full">
-        <motion.div
-          variants={textVariant()}
-          className="text-center mb-12 sm:mb-16"
-        >
-          <p className={styles.SectionSubText}>My Work</p>
-          <h2 className={styles.SectionHeadText}>Projects</h2>
-        </motion.div>
-        <div className="w-full flex justify-center items-center py-20">
-          <div className="text-red-400 text-center">
-            <p className="text-lg mb-2">Error loading projects</p>
-            <p className="text-sm text-gray-400">{error}</p>
+      <div className="py-12 sm:py-16 lg:py-20 bg-black dark:bg-gray-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <p className={styles.SectionSubText}>My Work</p>
+            <h2 className={styles.SectionHeadText}>Projects</h2>
+          </motion.div>
+          <div className="flex justify-center items-center min-h-[400px]">
+            <div className="text-red-400 text-center">
+              <p className="text-lg mb-2">Error loading projects</p>
+              <p className="text-sm text-gray-400">{error}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -208,35 +215,42 @@ const Works = () => {
   }
 
   return (
-    <div className="w-full">
-      <motion.div
-        variants={textVariant()}
-        className="text-center mb-12 sm:mb-16"
-      >
-        <p className={styles.SectionSubText}>My Work</p>
-        <h2 className={styles.SectionHeadText}>Projects</h2>
-      </motion.div>
+    <div className="py-12 sm:py-16 lg:py-20 bg-black dark:bg-gray-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12 sm:mb-16"
+        >
+          <p className={styles.SectionSubText}>My Work</p>
+          <h2 className={styles.SectionHeadText}>Projects</h2>
+        </motion.div>
 
-      <div className="w-full flex justify-center">
         <motion.p
           variants={fadeIn("", "", 0.1, 1)}
-          className="mt-3 text-gray-300 text-[17px] max-w-3xl leading-[30px] text-center"
+          className="mt-3 text-gray-300 text-[17px] max-w-3xl leading-[30px] text-center mx-auto"
         >
           These projects highlight my experience across analytics, full-stack
           development, and data-driven problem solving.
         </motion.p>
-      </div>
 
-      <motion.div
-        variants={fadeIn("", "", 0.2, 1)}
-        className="mt-12 flex flex-wrap justify-center gap-8"
-      >
-        {projects.map((project, index) => (
-          <ProjectCard key={`${project.title}-${index}`} {...project} index={index} />
-        ))}
-      </motion.div>
+        <motion.div
+          variants={fadeIn("", "", 0.2, 1)}
+          className="mt-12 flex flex-wrap justify-center gap-8"
+        >
+          {projects.map((project, index) => (
+            <ProjectCard
+              key={`${project.title}-${index}`}
+              {...project}
+              index={index}
+            />
+          ))}
+        </motion.div>
+      </div>
     </div>
   );
 };
 
 export default SectionWrapper(Works, "works");
+
