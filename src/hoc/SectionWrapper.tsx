@@ -1,8 +1,8 @@
 import { motion } from "framer-motion"
 import { staggerContainer } from "../utils/motion"
 
-const SectionWrapper = (Component: React.FC, idName: string) =>
-  function HOC() {
+const SectionWrapper = <P extends object>(Component: React.FC<P>, idName: string) =>
+  function HOC(props: P) {
     return (
       <motion.section
         id={idName}
@@ -12,7 +12,7 @@ const SectionWrapper = (Component: React.FC, idName: string) =>
         whileInView="show"
         viewport={{ once: true, amount: 0.25 }}
       >
-        <Component />
+        <Component {...props} />
       </motion.section>
     )
   }

@@ -1,42 +1,16 @@
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Tilt from "react-parallax-tilt";
 
-import { styles } from "../style";
+//import { styles } from "../style";
 import { fadeIn } from "../utils/motion";
 import { SectionWrapper } from "../hoc";
 
 import website from "../assets/Default.jpg";
 import github from "../assets/GitHub-2.png";
-
-interface Project {
-  title: string;
-  description: string;
-  tags: string[];
-  image: string;
-  link: string;
-}
+import type { Project } from "../data/types";
 
 interface ProjectCardProps extends Project {
   index: number;
-}
-
-interface ApiProject {
-  id: number;
-  name: string;
-  details: string;
-  image_url: string;
-  skills: string[];
-  demo_link: string;
-  github_link: string;
-}
-
-interface ApiResponse {
-  statusCode: number;
-  json: {
-    success: boolean;
-    data: ApiProject[];
-  };
 }
 
 const ProjectCard = ({
@@ -108,48 +82,11 @@ const ProjectCard = ({
   );
 };
 
-const Works = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+interface WorksProps {
+  projects: Project[];
+}
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-
-        const response = await fetch(
-          `${import.meta.env.VITE_RENDER_API}/api/projects/`
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch projects");
-        }
-
-        const data: ApiResponse = await response.json();
-
-        if (data.json.success) {
-          setProjects(
-            data.json.data.map((item) => ({
-              title: item.name,
-              description: item.details,
-              tags: item.skills,
-              image: item.image_url || website,
-              link: item.github_link || item.demo_link || "#",
-            }))
-          );
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to load projects");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProjects();
-  }, []);
-
+const Works = ({ projects }: WorksProps) => {
   return (
     <div className="py-12 sm:py-16 lg:py-20 bg-black dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -159,40 +96,31 @@ const Works = () => {
           transition={{ duration: 0.5 }}
           className="text-center mb-12 sm:mb-16"
         >
-          <p className={styles.SectionSubText}>My Work</p>
-          <h2 className={styles.SectionHeadText}>Projects</h2>
+          <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto px-4">
+            My Work
+          </p>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
+            Projects
+          </h2>
         </motion.div>
 
-        {loading && (
-          <div className="flex justify-center items-center min-h-[400px]">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-          </div>
-        )}
-
-        {error && !loading && (
-          <div className="flex justify-center items-center min-h-[400px] text-red-400">
-            {error}
-          </div>
-        )}
-
-        {!loading && !error && (
-          <motion.div
-            key={projects.length}
-            variants={fadeIn("", "", 0.2, 1)}
-            className="mt-12 flex flex-wrap justify-center gap-8"
-          >
-            {projects.map((project, index) => (
-              <ProjectCard
-                key={`${project.title}-${index}`}
-                {...project}
-                index={index}
-              />
-            ))}
-          </motion.div>
-        )}
+        <motion.div
+          key={projects.length}
+          variants={fadeIn("", "", 0.2, 1)}
+          className="mt-12 flex flex-wrap justify-center gap-8"
+        >
+          {projects.map((project, index) => (
+            <ProjectCard
+              key={`${project.title}-${index}`}
+              {...project}
+              index={index}
+            />
+          ))}
+        </motion.div>
       </div>
     </div>
   );
 };
 
 export default SectionWrapper(Works, "works");
+

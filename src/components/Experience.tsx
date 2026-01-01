@@ -1,51 +1,14 @@
-import { useState, useEffect } from 'react';
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
 import { motion } from 'framer-motion';
 import { SectionWrapper } from '../hoc';
+import type { Experience } from '../data/types';
 
-
-interface Experience {
-  title: string;
-  company: string;
-  period: string;
-  location: string;
-  description: string;
-  technologies: string[];
+interface ExperienceProps {
+  experiences: Experience[];
 }
 
-interface ApiExperience {
-  id: number;
-  title: string;
-  company_name: string;
-  start_date: string;
-  end_date: string;
-  details: string;
-  location: string;
-  skills: string[];
-}
-
-const fetchExperienceData = async (): Promise<Experience[]> => {
-const response = await fetch(
-  import.meta.env.VITE_RENDER_API + '/api/journey'
-);
-  const result = await response.json();
-  
-  if (!result.json.success) {
-    throw new Error('Failed to fetch experience data');
-  }
-
-  return result.json.data.map((item: ApiExperience) => ({
-    title: item.title,
-    company: item.company_name,
-    period: formatDateRange(item.start_date, item.end_date),
-    location: item.location,
-    description: item.details,
-    technologies: item.skills || []
-  }));
-};
-
-const formatDateRange = (startDate: string, endDate: string): string => {
+export const formatDateRange = (startDate: string, endDate: string): string => {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { 
@@ -64,81 +27,7 @@ const formatDateRange = (startDate: string, endDate: string): string => {
   return `${formattedStart} - ${formattedEnd}`;
 };
 
-const Experience = () => {
-  const [experiences, setExperiences] = useState<Experience[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const loadExperiences = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const data = await fetchExperienceData();
-        setExperiences(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load experiences');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadExperiences();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="py-12 sm:py-16 lg:py-20 bg-black dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-12 sm:mb-16"
-          >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
-              Experience
-            </h2>
-            <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto px-4">
-              My professional journey and key achievements
-            </p>
-          </motion.div>
-          <div className="flex justify-center items-center min-h-[400px]">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="py-12 sm:py-16 lg:py-20 bg-black dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-12 sm:mb-16"
-          >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
-              Experience
-            </h2>
-            <p className="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto px-4">
-              My professional journey and key achievements
-            </p>
-          </motion.div>
-          <div className="flex justify-center items-center min-h-[400px]">
-            <div className="text-red-400 text-center">
-              <p className="text-lg mb-2">Error loading experiences</p>
-              <p className="text-sm text-gray-400">{error}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
+const Experience = ({ experiences }: ExperienceProps) => {
   return (
     <div className="py-12 sm:py-16 lg:py-20 bg-black dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -209,4 +98,4 @@ const Experience = () => {
   );
 };
 
-export default SectionWrapper(Experience, "experience")
+export default SectionWrapper(Experience, "experience");
