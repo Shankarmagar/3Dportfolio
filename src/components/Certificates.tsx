@@ -14,7 +14,7 @@ const dummyCertifications = [
     issue_date: "2024-10-25",
     expiry_date: null,
     credential_id: "2448-GYM9-SHRS",
-    credential_url: "https://www.freecodecamp.org/certification/fcc70c05c73-294e-4665-a62f-fe1aec3b3144/responsive-web-design",
+    credential_url: "https://drive.google.com/file/d/1eH-bYbL6ft17HnF0OiTrDS8pLUk3snFV/view?usp=sharing",
     description:
       "6 months intensive software development course following with 6 months internship",
   },
@@ -47,7 +47,7 @@ const dummyCertifications = [
     issue_date: "2023-10-15",
     expiry_date: null,
     credential_id: "63054",
-    credential_url: "https://github.com/Shankarmagar/personal-web-portfolio/blob/main/personal-web-portfolio/src/assets/images/iOSCertificate.png",
+    credential_url: "https://drive.google.com/file/d/1pzEjKDT1Lge-10Aa3TTiAsHn2MgUuNaN/view?usp=sharing",
     description:
       "Hands-on projects focused on iOS app development, user interface design, and mobile app architecture.",
   },
@@ -61,6 +61,28 @@ const dummyCertifications = [
     credential_url: "https://github.com/Shankarmagar/personal-web-portfolio/blob/main/personal-web-portfolio/src/assets/images/AndroidCertificate.png",
     description:
       "Hands-on projects focused on user research, wireframing, prototyping, and usability testing.",
+  },
+  {
+    id: 6,
+    title: "Mobile Engineering Virtual Experience",
+    issuer: "Forage X Lyft",
+    issue_date: "2023-12-29",
+    expiry_date: null,
+    credential_id: "2kjZyeoxMPoRXRHhM",
+    credential_url: "https://drive.google.com/file/d/1xe4EITtgpMApFL_SGLpTfuzBGyxjlocE/view?usp=sharing",
+    description:
+      "Build a RideSharer iOS app where user can see ride history with the driver name along with cost price for the ride. work with the Mapkit framework Display the map and showed the user location in map along with permission to access",
+  },
+  {
+    id: 7,
+    title: "Software Engineering Virtual Experience",
+    issuer: "Forage X JP Morgan Chase & Co.",
+    issue_date: "2023-12-29",
+    expiry_date: null,
+    credential_id: "EPKdrByLXYvNphKRq",
+    credential_url: "https://drive.google.com/file/d/1LwMb2DxvksDM9yDF0gs0685Q9Z_iqkyo/view?usp=sharing",
+    description:
+      " Displayed the virtual data of trade in graph after accessing the server and shown continuously changes in graph.",
   },
 ];
 
